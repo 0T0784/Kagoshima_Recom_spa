@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#adbbb1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
+<title>Language / 言語</title>
+<style>
+/* ===== 配色・書体(温泉パンフレットPDFに合わせたテーマ) ===== */
+:root{
+  --cream:#f3e8d6; --brown:#5a4033; --gold:#a8741f; --gold2:#c49a52;
+  --sage:#adbbb1; --sage2:#8fa89d; --panelA:rgba(243,232,214,.94);
+  --jp:"Yusei Magic","Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{color:var(--brown);font-family:var(--jp);display:flex;flex-direction:column;overflow:hidden;
+  background:
+   radial-gradient(ellipse 55% 38% at 18% 8%,rgba(255,255,255,.42),transparent 70%),
+   radial-gradient(ellipse 45% 32% at 88% 18%,rgba(255,255,255,.32),transparent 70%),
+   radial-gradient(ellipse 80% 35% at 50% 105%,rgba(255,255,255,.28),transparent 70%),
+   var(--sage)}
+/* 背景の装飾: 湯屋のタイル目地 + 四隅の金色の幾何学模様 */
+#deco{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+   repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 1px,transparent 1px 72px),
+   repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 1px,transparent 1px 72px)}
+#deco::before,#deco::after{content:"";position:absolute;bottom:0;width:min(34vw,340px);aspect-ratio:1;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68' fill='none' stroke='%23c49a52' stroke-width='1.6'%3E%3Crect x='14' y='14' width='40' height='40'/%3E%3Crect x='14' y='14' width='40' height='40' transform='rotate(45 34 34)'/%3E%3Ccircle cx='34' cy='34' r='9'/%3E%3Cpath d='M0 34h14M54 34h14M34 0v14M34 54v14'/%3E%3C/svg%3E") 0 100%/68px 68px}
+#deco::before{left:0;-webkit-mask-image:radial-gradient(circle at 0% 100%,#000 0,#000 35%,transparent 72%);mask-image:radial-gradient(circle at 0% 100%,#000 0,#000 35%,transparent 72%)}
+#deco::after{right:0;-webkit-mask-image:radial-gradient(circle at 100% 100%,#000 0,#000 35%,transparent 72%);mask-image:radial-gradient(circle at 100% 100%,#000 0,#000 35%,transparent 72%)}
+
+.steam{animation:steam 3.2s ease-in-out infinite}
+@keyframes steam{0%,100%{opacity:.45;transform:translateY(2px)}50%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.steam{animation:none}}
+
+body{overflow:auto;align-items:center;justify-content:center;min-height:100%;padding:24px 0}
+main{position:relative;z-index:1;width:min(360px,88vw);padding:44px 26px 32px;text-align:center;background:var(--cream);border-radius:999px 999px 18px 18px;box-shadow:0 0 0 8px var(--sage2),0 0 0 10px rgba(255,255,255,.45),0 14px 30px rgba(90,64,51,.3)}
+main .mark{display:block;margin:0 auto 8px}
+h1{margin:0 0 6px;font-size:22px;font-weight:normal;letter-spacing:.12em;color:var(--gold)}
+p{margin:0 0 20px;font-size:14px}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+a.lang{display:block;padding:14px 12px;font-size:20px;color:var(--brown);text-decoration:none;border:3px double var(--brown);border-radius:14px;background:rgba(255,255,255,.35);transition:background .2s,color .2s}
+a.lang:hover,a.lang:focus-visible{background:var(--gold);border-color:var(--gold);color:#fff8ea;outline:none}
+a.lang:focus-visible{box-shadow:0 0 0 3px var(--sage2)}
+</style>
+</head>
+<body>
+<div id="deco"></div>
+<main>
+  <svg class="mark" viewBox="0 0 100 78" width="84" height="66" aria-hidden="true"><g class="steam" fill="none" stroke="#a8741f" stroke-width="3.5" stroke-linecap="round"><path d="M38 32c-6-7 6-11 0-19M50 34c-7-9 7-14 0-24M62 32c-6-7 6-11 0-19"/></g><path d="M12 46h76c0 14-15 24-38 24S12 60 12 46z" fill="#a8741f"/><ellipse cx="50" cy="46" rx="38" ry="7" fill="#c49a52"/></svg>
+  <h1>Language / 言語</h1>
+  <p>Select a language · 언어 선택 · 选择语言</p>
+  <ul id="list"></ul>
+</main>
+<script>
+// ===== 設定 =====
+// 表示するビューアHTMLのファイル名
+const VIEWER = "novel.html";
+// 言語ごとのPDF。file=PDFのファイル名(ビューアと同じ場所に置く) / dir="ltr"=左開き, "rtl"=右開き
+// 言語を増やすときはここに1行足すだけ(lang は ja / en / ko / zh のどれか。ボタンやメッセージの言語になります)
+const BOOKS = [
+  {lang:"en", label:"English", file:"ENG.pdf", dir:"ltr"},
+  {lang:"ko", label:"한국어",   file:"KOR.pdf", dir:"ltr"},
+  {lang:"zh", label:"中文",     file:"CHN.pdf", dir:"ltr"}
+];
+const list = document.getElementById("list");
+BOOKS.forEach(b => {
+  const li = document.createElement("li"), a = document.createElement("a");
+  a.className = "lang"; a.textContent = b.label; a.lang = b.lang;
+  a.href = `${VIEWER}?pdf=${encodeURIComponent(b.file)}&dir=${b.dir}&lang=${b.lang}`;
+  li.appendChild(a); list.appendChild(li);
+});
+</script>
+</body>
+</html>

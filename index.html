@@ -54,7 +54,7 @@ a.lang:focus-visible{box-shadow:0 0 0 3px var(--sage2)}
 <main>
   <svg class="mark" viewBox="0 0 100 78" width="84" height="66" aria-hidden="true"><g class="steam" fill="none" stroke="#a8741f" stroke-width="3.5" stroke-linecap="round"><path d="M38 32c-6-7 6-11 0-19M50 34c-7-9 7-14 0-24M62 32c-6-7 6-11 0-19"/></g><path d="M12 46h76c0 14-15 24-38 24S12 60 12 46z" fill="#a8741f"/><ellipse cx="50" cy="46" rx="38" ry="7" fill="#c49a52"/></svg>
   <h1>Language / 言語</h1>
-  <p>Select a language · 언어 선택 · 选择语言</p>
+  <p>言語を選択 · Select a language · 언어 선택 · 选择语言</p>
   <ul id="list"></ul>
 </main>
 <script>
@@ -64,9 +64,10 @@ const VIEWER = "novel.html";
 // 言語ごとのPDF。file=PDFのファイル名(ビューアと同じ場所に置く) / dir="ltr"=左開き, "rtl"=右開き
 // 言語を増やすときはここに1行足すだけ(lang は ja / en / ko / zh のどれか。ボタンやメッセージの言語になります)
 const BOOKS = [
+  {lang:"ja", label:"日本語",   file:"JPN.pdf", dir:"ltr"},
   {lang:"en", label:"English", file:"ENG.pdf", dir:"ltr"},
   {lang:"ko", label:"한국어",   file:"KOR.pdf", dir:"ltr"},
-  {lang:"zh", label:"中文",     file:"CHS.pdf", dir:"ltr"}
+  {lang:"zh", label:"中文",     file:"CHN.pdf", dir:"ltr"}
 ];
 const list = document.getElementById("list");
 BOOKS.forEach(b => {
